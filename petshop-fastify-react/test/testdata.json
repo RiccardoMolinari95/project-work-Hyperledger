@@ -1,0 +1,32 @@
+[
+	{
+        "name":        "Cookie",
+        "type":        "DOG",
+        "breed":       "Pinscher",
+        "birthDate":   "2017-01-23",
+        "imgUrl":      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/German_Pinscher.JPG/1024px-German_Pinscher.JPG",
+        "description": "Cookie is a very sociable dog and loves barking all the time",
+        "pedigree":    true
+	},
+
+    {
+        "name":        "Nani",
+        "type":        "CAT",
+        "breed":       "Persian",
+        "birthDate":   "2021-04-25",
+        "imgUrl":      "https://upload.wikimedia.org/wikipedia/commons/1/15/White_Persian_Cat.jpg",
+        "description": "She has been found in the streets of Chicago, abandoned by her previous owners. She's lovely!",
+        "pedigree":    false
+    },
+
+    {
+        "name":        "Nefertiti",
+        "type":        "CAT",
+        "breed":       "Abyssinian",
+        "birthDate":   "2020-03-12",
+        "imgUrl":      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Gustav_chocolate.jpg/800px-Gustav_chocolate.jpg",
+        "description": "A true lady, Nefertiti has noble origins and spends most of her time reading books.",
+        "pedigree":    true
+    }
+
+]

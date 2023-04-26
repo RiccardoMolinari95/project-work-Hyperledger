@@ -1,0 +1,9 @@
+{
+    "type": "sqlite",
+    "database": "./data/db.sqlite3",
+    "useNewUrlParser": true,
+    "synchronize": true,
+    "logging": true,
+    "entities": ["src/modules/animals/*.*"],
+    "useUnifiedTopology": true
+}
