@@ -43,4 +43,16 @@ export class Animal {
 
   @Column({ nullable: true })
   transactionHash: string;
+
+  @Column({name: "owner_id", nullable: true })
+  ownerId: string
+
+  @Column({name: "owner_name", nullable: true })
+  ownerName: string
+
+  @Column({name: "owner_lastname", nullable: true })
+  ownerLastname: string
+
 }
+
+

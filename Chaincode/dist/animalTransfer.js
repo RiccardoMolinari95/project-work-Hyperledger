@@ -25,23 +25,16 @@ let AnimalTransferContract = class AnimalTransferContract extends fabric_contrac
         const animals = [];
     }
     // CreateAnimal issues a new Animal to the world state with given details.
-    async CreateAnimal(ctx, id, name, breed, birthDate, imgUrl, description, type, pedigree) {
-        const exists = await this.AnimalExists(ctx, id);
+    async CreateAnimal(ctx, animal) {
+        let _animal;
+        _animal = JSON.parse(animal);
+        console.log(_animal);
+        const exists = await this.AnimalExists(ctx, _animal.ID);
         if (exists) {
-            throw new Error(`The animal with id:  ${id} already exists`);
+            throw new Error(`The animal with id:  ${_animal.ID} already exists`);
         }
-        const animal = {
-            ID: id,
-            name: name,
-            breed: breed,
-            birthDate: birthDate,
-            imgUrl: imgUrl,
-            description: description,
-            type: type,
-            pedigree: pedigree
-        };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
-        await ctx.stub.putState(id, Buffer.from(json_stringify_deterministic_1.default(sort_keys_recursive_1.default(animal))));
+        await ctx.stub.putState(_animal.ID, Buffer.from(json_stringify_deterministic_1.default(sort_keys_recursive_1.default(_animal))));
     }
     // ReadAnimal returns the Animal stored in the world state with given id.
     async ReadAnimal(ctx, id) {
@@ -59,6 +52,7 @@ let AnimalTransferContract = class AnimalTransferContract extends fabric_contrac
         }
         const animalString = await this.ReadAnimal(ctx, id);
         const savedAnimal = JSON.parse(animalString);
+        const owner = savedAnimal.owner;
         // overwriting original Animal with new Animal
         const updatedAnimalName = {
             ID: id,
@@ -68,7 +62,8 @@ let AnimalTransferContract = class AnimalTransferContract extends fabric_contrac
             imgUrl: savedAnimal.imgUrl,
             description: savedAnimal.description,
             type: savedAnimal.type,
-            pedigree: savedAnimal.pedigree
+            pedigree: savedAnimal.pedigree,
+            owner: owner
         };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
         return ctx.stub.putState(id, Buffer.from(json_stringify_deterministic_1.default(sort_keys_recursive_1.default(updatedAnimalName))));
@@ -79,6 +74,9 @@ let AnimalTransferContract = class AnimalTransferContract extends fabric_contrac
         if (!exists) {
             throw new Error(`The Animal with id:  ${id} does not exist`);
         }
+        const animalString = await this.ReadAnimal(ctx, id);
+        const savedAnimal = JSON.parse(animalString);
+        const owner = savedAnimal.owner;
         // overwriting original Animal with new Animal
         const updatedAnimal = {
             ID: id,
@@ -88,10 +86,57 @@ let AnimalTransferContract = class AnimalTransferContract extends fabric_contrac
             imgUrl: imgUrl,
             description: description,
             type: type,
-            pedigree: pedigree
+            pedigree: pedigree,
+            owner: owner
         };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
         return ctx.stub.putState(id, Buffer.from(json_stringify_deterministic_1.default(sort_keys_recursive_1.default(updatedAnimal))));
+    }
+    async UpdateOwner(ctx, id, ownerId, ownerName, ownerLastname) {
+        const exists = await this.AnimalExists(ctx, id);
+        if (!exists) {
+            throw new Error(`The Animal with id:  ${id} does not exist`);
+        }
+        const animalString = await this.ReadAnimal(ctx, id);
+        const savedAnimal = JSON.parse(animalString);
+        let _owner;
+        try {
+            _owner = {
+                ownerId: ownerId,
+                ownerName: ownerName,
+                ownerLastname: ownerLastname
+            };
+        }
+        catch (err) {
+            console.log("Errore nella valorizzazione di owner ", err);
+        }
+        ;
+        const updatedAnimal = {
+            ID: id,
+            name: savedAnimal.name,
+            breed: savedAnimal.breed,
+            birthDate: savedAnimal.birthDate,
+            imgUrl: savedAnimal.imgUrl,
+            description: savedAnimal.description,
+            type: savedAnimal.type,
+            pedigree: savedAnimal.pedigree,
+            owner: _owner
+        };
+        console.log("Update animal id" + updatedAnimal.owner.ownerId);
+        console.log("UPdate animal name" + updatedAnimal.owner.ownerName);
+        console.log("UPdate animal lastName" + updatedAnimal.owner.ownerLastname);
+        // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
+        return ctx.stub.putState(id, Buffer.from(json_stringify_deterministic_1.default(sort_keys_recursive_1.default(updatedAnimal))));
+    }
+    async SearchAnimal(ctx, query) {
+        let resultsIterator = await ctx.stub.getQueryResult(query);
+        let results = await this._GetAllResults(resultsIterator, true);
+        return JSON.stringify(results);
+    }
+    async SearchAnimalsByOwnerId(ctx, query) {
+        let resultsIterator = await ctx.stub.getQueryResult(query);
+        let results = await this._GetAllResults(resultsIterator, true);
+        return JSON.stringify(results);
     }
     // DeleteAnimal deletes an given Animal from the world state.
     async DeleteAnimal(ctx, id) {
@@ -182,7 +227,7 @@ __decorate([
 __decorate([
     fabric_contract_api_1.Transaction(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [fabric_contract_api_1.Context, String, String, String, String, String, String, String, String]),
+    __metadata("design:paramtypes", [fabric_contract_api_1.Context, String]),
     __metadata("design:returntype", Promise)
 ], AnimalTransferContract.prototype, "CreateAnimal", null);
 __decorate([
@@ -203,6 +248,26 @@ __decorate([
     __metadata("design:paramtypes", [fabric_contract_api_1.Context, String, String, String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], AnimalTransferContract.prototype, "UpdateAnimal", null);
+__decorate([
+    fabric_contract_api_1.Transaction(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [fabric_contract_api_1.Context, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], AnimalTransferContract.prototype, "UpdateOwner", null);
+__decorate([
+    fabric_contract_api_1.Transaction(false),
+    fabric_contract_api_1.Returns('string'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [fabric_contract_api_1.Context, String]),
+    __metadata("design:returntype", Promise)
+], AnimalTransferContract.prototype, "SearchAnimal", null);
+__decorate([
+    fabric_contract_api_1.Transaction(false),
+    fabric_contract_api_1.Returns('string'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [fabric_contract_api_1.Context, String]),
+    __metadata("design:returntype", Promise)
+], AnimalTransferContract.prototype, "SearchAnimalsByOwnerId", null);
 __decorate([
     fabric_contract_api_1.Transaction(),
     __metadata("design:type", Function),

@@ -3,6 +3,7 @@
 */
 
 import {Object, Property} from 'fabric-contract-api';
+import { Owner } from './owner';
 
 @Object()
 export class Animal {
@@ -30,4 +31,7 @@ export class Animal {
 
     @Property()
     public pedigree: string;
+
+    @Property()
+    public owner?: Owner;
 }

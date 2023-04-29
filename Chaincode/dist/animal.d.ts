@@ -1,3 +1,4 @@
+import { Owner } from './owner';
 export declare class Animal {
     ID: string;
     name: string;
@@ -7,4 +8,5 @@ export declare class Animal {
     description: string;
     type: string;
     pedigree: string;
+    owner?: Owner;
 }

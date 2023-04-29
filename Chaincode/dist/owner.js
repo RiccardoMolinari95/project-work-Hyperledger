@@ -1,7 +1,4 @@
 "use strict";
-/*
-  SPDX-License-Identifier: Apache-2.0
-*/
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12,49 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Animal = void 0;
+exports.Owner = void 0;
 const fabric_contract_api_1 = require("fabric-contract-api");
-const owner_1 = require("./owner");
-let Animal = class Animal {
+let Owner = class Owner {
 };
 __decorate([
     fabric_contract_api_1.Property(),
     __metadata("design:type", String)
-], Animal.prototype, "ID", void 0);
+], Owner.prototype, "ownerId", void 0);
 __decorate([
     fabric_contract_api_1.Property(),
     __metadata("design:type", String)
-], Animal.prototype, "name", void 0);
+], Owner.prototype, "ownerName", void 0);
 __decorate([
     fabric_contract_api_1.Property(),
     __metadata("design:type", String)
-], Animal.prototype, "breed", void 0);
-__decorate([
-    fabric_contract_api_1.Property(),
-    __metadata("design:type", String)
-], Animal.prototype, "birthDate", void 0);
-__decorate([
-    fabric_contract_api_1.Property(),
-    __metadata("design:type", String)
-], Animal.prototype, "imgUrl", void 0);
-__decorate([
-    fabric_contract_api_1.Property(),
-    __metadata("design:type", String)
-], Animal.prototype, "description", void 0);
-__decorate([
-    fabric_contract_api_1.Property(),
-    __metadata("design:type", String)
-], Animal.prototype, "type", void 0);
-__decorate([
-    fabric_contract_api_1.Property(),
-    __metadata("design:type", String)
-], Animal.prototype, "pedigree", void 0);
-__decorate([
-    fabric_contract_api_1.Property(),
-    __metadata("design:type", owner_1.Owner)
-], Animal.prototype, "owner", void 0);
-Animal = __decorate([
+], Owner.prototype, "ownerLastname", void 0);
+Owner = __decorate([
     fabric_contract_api_1.Object()
-], Animal);
-exports.Animal = Animal;
-//# sourceMappingURL=animal.js.map
+], Owner);
+exports.Owner = Owner;
+//# sourceMappingURL=owner.js.map

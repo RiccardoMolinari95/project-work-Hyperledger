@@ -6,6 +6,7 @@ import {Context, Contract, Info, Returns, Transaction} from 'fabric-contract-api
 import stringify from 'json-stringify-deterministic';
 import sortKeysRecursive from 'sort-keys-recursive';
 import {Animal} from './animal';
+import { Owner } from './owner';
 
 @Info({title: 'AnimalTransfer', description: 'Smart contract for manipulate animals'})
 export class AnimalTransferContract extends Contract {
@@ -17,24 +18,18 @@ export class AnimalTransferContract extends Contract {
 
     // CreateAnimal issues a new Animal to the world state with given details.
     @Transaction()
-    public async CreateAnimal(ctx: Context, id: string, name: string, breed: string, birthDate: string, imgUrl: string, description: string, type: string, pedigree: string): Promise<void> {
-        const exists = await this.AnimalExists(ctx, id);
+    public async CreateAnimal(ctx: Context, animal: string): Promise<void> {
+        let _animal: Animal;
+
+        _animal = JSON.parse(animal) as Animal;
+        console.log(_animal);
+        const exists = await this.AnimalExists(ctx, _animal.ID);
         if (exists) {
-            throw new Error(`The animal with id:  ${id} already exists`);
+            throw new Error(`The animal with id:  ${_animal.ID} already exists`);
         }
 
-        const animal = {
-            ID: id,
-            name: name,
-            breed: breed,
-            birthDate: birthDate,
-            imgUrl: imgUrl,
-            description: description,
-            type: type,
-            pedigree: pedigree
-        };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
-        await ctx.stub.putState(id, Buffer.from(stringify(sortKeysRecursive(animal))));
+        await ctx.stub.putState(_animal.ID, Buffer.from(stringify(sortKeysRecursive(_animal))));
     }
 
     // ReadAnimal returns the Animal stored in the world state with given id.
@@ -57,7 +52,9 @@ export class AnimalTransferContract extends Contract {
 
         const animalString = await this.ReadAnimal(ctx, id);
         const savedAnimal = JSON.parse(animalString) as Animal;
-        
+
+        const owner = savedAnimal.owner;
+       
         // overwriting original Animal with new Animal
         const updatedAnimalName = {
             ID: id,
@@ -67,7 +64,8 @@ export class AnimalTransferContract extends Contract {
             imgUrl: savedAnimal.imgUrl,
             description: savedAnimal.description,
             type: savedAnimal.type,
-            pedigree: savedAnimal.pedigree
+            pedigree: savedAnimal.pedigree,
+            owner: owner
         };
 
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
@@ -82,6 +80,11 @@ export class AnimalTransferContract extends Contract {
             throw new Error(`The Animal with id:  ${id} does not exist`);
         }
 
+        const animalString = await this.ReadAnimal(ctx, id);
+        const savedAnimal = JSON.parse(animalString) as Animal;
+
+        const owner = savedAnimal.owner;
+
         // overwriting original Animal with new Animal
         const updatedAnimal = {
             ID: id,
@@ -91,10 +94,74 @@ export class AnimalTransferContract extends Contract {
             imgUrl: imgUrl,
             description: description,
             type: type,
-            pedigree: pedigree
+            pedigree: pedigree,
+            owner: owner
         };
         // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
         return ctx.stub.putState(id, Buffer.from(stringify(sortKeysRecursive(updatedAnimal))));
+    }
+
+
+    @Transaction()
+    public async UpdateOwner(ctx: Context, id: string, ownerId: string, ownerName: string, ownerLastname: string): Promise<void> {
+        const exists = await this.AnimalExists(ctx, id);
+        if (!exists) {
+            throw new Error(`The Animal with id:  ${id} does not exist`);
+        }
+
+        const animalString = await this.ReadAnimal(ctx, id);
+        const savedAnimal = JSON.parse(animalString) as Animal;
+        
+        let _owner: Owner;
+
+        try{
+
+            _owner = {
+                ownerId: ownerId,
+                ownerName: ownerName,
+                ownerLastname: ownerLastname
+            }
+    
+        }catch (err) {
+            console.log("Errore nella valorizzazione di owner ", err)
+        };
+
+        const updatedAnimal = {
+            ID: id,
+            name: savedAnimal.name,
+            breed: savedAnimal.breed,
+            birthDate: savedAnimal.birthDate,
+            imgUrl: savedAnimal.imgUrl,
+            description: savedAnimal.description,
+            type: savedAnimal.type,
+            pedigree: savedAnimal.pedigree,
+            owner: _owner
+        };
+
+        console.log("Update animal id" + updatedAnimal.owner.ownerId)
+        console.log("UPdate animal name" + updatedAnimal.owner.ownerName)
+        console.log("UPdate animal lastName" + updatedAnimal.owner.ownerLastname)
+
+        // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
+        return ctx.stub.putState(id, Buffer.from(stringify(sortKeysRecursive(updatedAnimal))));
+    }
+
+    @Transaction(false)
+    @Returns('string')
+    public async SearchAnimal(ctx: Context, query: string){
+        let resultsIterator = await ctx.stub.getQueryResult(query);
+		let results = await this._GetAllResults(resultsIterator, true);
+
+		return JSON.stringify(results);
+    }
+
+    @Transaction(false)
+    @Returns('string')
+    public async SearchAnimalsByOwnerId(ctx: Context, query: string){
+        let resultsIterator = await ctx.stub.getQueryResult(query);
+		let results = await this._GetAllResults(resultsIterator, true);
+
+		return JSON.stringify(results);
     }
 
     // DeleteAnimal deletes an given Animal from the world state.
@@ -106,6 +173,7 @@ export class AnimalTransferContract extends Contract {
         }
         return ctx.stub.deleteState(id);
     }
+
 
 	// TODO: Da testare e implementare lato AnimalContractService e lato back-end (pet-shop)
     // GetAllAnimal returns all animal found in the world state.

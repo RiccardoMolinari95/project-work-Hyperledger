@@ -8,7 +8,10 @@ export const animalSchema = {
 	description: { type: 'string' },
 	pedigree: { type: 'boolean' },
 	created_at: { type: 'string', format: 'date-time' },
-	updated_at: { type: 'string', format: 'date-time' }
+	updated_at: { type: 'string', format: 'date-time' },
+	owner_id: {type: 'string', format: 'uuid'},
+	owner_name: { type: 'string' },
+	owner_lastname: { type: 'string' },
 };
 
 export const listAnimalsSchema = {

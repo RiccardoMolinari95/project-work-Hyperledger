@@ -15,20 +15,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hyperledger/fabric-gateway": "^1.1.1",
     "dotenv": "^8.2.0",
-    "fabric-contract-api": "^2.4.0",
-    "fabric-shim": "^2.4.0",
     "fastify": "^3.14.2",
     "fastify-cors": "^5.2.0",
     "fastify-oas": "^3.0.8",
     "fastify-plugin": "3.0.0",
-    "json-stringify-deterministic": "^1.0.1",
     "mongodb": "^3.6.6",
     "reflect-metadata": "^0.1.13",
-    "sort-keys-recursive": "^2.1.2",
-    "sqlite3": "^5.1.6",
-    "typeorm": "^0.2.32"
+    "sqlite3": "^5.1.4",
+    "typeorm": "^0.2.32",
+    "@hyperledger/fabric-gateway": "^1.1.1",
+    "fabric-contract-api": "^2.4.0",
+    "fabric-shim": "^2.4.0",
+    "json-stringify-deterministic": "^1.0.1",
+    "sort-keys-recursive": "^2.1.2"
+
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
