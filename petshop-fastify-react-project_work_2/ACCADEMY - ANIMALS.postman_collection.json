@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "0be5a857-f491-4d2b-b81a-c23a3c823062",
+		"name": "ACCADEMY - ANIMALS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17303046",
+		"_collection_link": "https://warped-shadow-948857.postman.co/workspace/Test-Web-Services~4ce2fda0-dbdf-43ee-ad53-521b0ff245ff/collection/17303046-0be5a857-f491-4d2b-b81a-c23a3c823062?action=share&creator=17303046&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Create animal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Oscar\",\n    \"type\": \"DOG\",\n    \"breed\": \"si\",\n    \"birthDate\": \"03/12/1992\",\n    \"imgUrl\": \"cia\",\n    \"description\": \"erw\",\n    \"pedigree\": true,\n    \"ownerName\": \"Mario\",\n    \"ownerLastname\": \"Rossi\"\n\n\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/animal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Animal by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/animal/1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Animal by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/animal/1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Animal by owner id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/animal/1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update animal name",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Luig2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/animal/1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5",
+						"name"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update animal owner",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ownerName\": \"Luca\",\n    \"ownerLastname\": \"Gialli\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/animal/changeOwner/f547cef5-7a97-4ec3-b5c2-7c01446f8d6d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"changeOwner",
+						"f547cef5-7a97-4ec3-b5c2-7c01446f8d6d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Animal",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Gino2\",\r\n    \"type\": \"CAT\",\r\n    \"breed\": \"singer\",\r\n    \"birthDate\": \"03/12/1992\",\r\n    \"imgUrl\": \"sdcvscvfcvsdsdsd\",\r\n    \"description\": \"ever\",\r\n    \"pedigree\": false\r\n\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/animal/7ae1bf5e-5371-4c32-a05b-e989f921c598",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"7ae1bf5e-5371-4c32-a05b-e989f921c598"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Animal",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/animal/1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllAnimal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/animal/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAnimalHistory",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/animal/history/1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"animal",
+						"history",
+						"1a7a1b1d-b166-4aaf-bf4e-a09bf91783c5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
